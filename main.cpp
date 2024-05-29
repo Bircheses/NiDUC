@@ -19,6 +19,9 @@ int random_info();
 vector<int> one_error(vector<int>& coded_information);
 vector<int> two_errors(vector<int>& coded_information);
 vector<int> three_errors(vector<int>& coded_information);
+vector<int> two_errors_group_15_7(vector<int>& coded_information);
+vector<int> two_errors_group_15_5(vector<int>& coded_information);
+vector<int> three_errors_group_15_5(vector<int>& coded_information);
 
 
 int main() {
@@ -38,7 +41,8 @@ int main() {
         showVector(coded_information1);
 
         //coded_information1 = one_error(coded_information1);
-        coded_information1 = two_errors(coded_information1);
+        //coded_information1 = two_errors(coded_information1);
+        coded_information1 = two_errors_group_15_7(coded_information1);
         cout << "z bledami:        ";
         showVector(coded_information1);
 
@@ -64,7 +68,9 @@ int main() {
 
         //coded_information2 = one_error(coded_information2);
         //coded_information2 = two_errors(coded_information2);
-        coded_information2 = three_errors(coded_information2);
+        //coded_information2 = three_errors(coded_information2);
+        //coded_information2 = two_errors_group_15_5(coded_information2);
+        coded_information2 = three_errors_group_15_5(coded_information2);
         cout << "z bledami:        ";
         showVector(coded_information2);
 
@@ -124,7 +130,7 @@ int random_info(){
 }
 
 vector<int> one_error(vector<int>& coded_information){
-    int error_index = (rand()%15)+1;
+    int error_index = (rand()%14)+1;
 
     if (coded_information[error_index] == 0){
         coded_information[error_index] = 1;
@@ -136,10 +142,10 @@ vector<int> one_error(vector<int>& coded_information){
 }
 
 vector<int> two_errors(vector<int>& coded_information){
-    int error_index1 = (rand()%15)+1;
+    int error_index1 = (rand()%14)+1;
     int error_index2 = error_index1;
     while (error_index2 == error_index1){
-        error_index2 = (rand()%15)+1;
+        error_index2 = (rand()%14)+1;
     }
 
     if (coded_information[error_index1] == 0){
@@ -158,14 +164,14 @@ vector<int> two_errors(vector<int>& coded_information){
 }
 
 vector<int> three_errors(vector<int>& coded_information){
-    int error_index1 = (rand()%15)+1;
+    int error_index1 = (rand()%14)+1;
     int error_index2 = error_index1;
     while (error_index2 == error_index1){
-        error_index2 = (rand()%15)+1;
+        error_index2 = (rand()%14)+1;
     }
     int error_index3 = error_index1;
     while (error_index3 == error_index1 || error_index3 == error_index2){
-        error_index3 = (rand()%15)+1;
+        error_index3 = (rand()%14)+1;
     }
 
     if (coded_information[error_index1] == 0){
@@ -184,6 +190,75 @@ vector<int> three_errors(vector<int>& coded_information){
         coded_information[error_index3] = 1;
     } else {
         coded_information[error_index3] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> two_errors_group_15_7(vector<int>& coded_information){
+    int error_index = (rand()%13)+1;
+    while (error_index == 6){
+        error_index = (rand()%13)+1;
+    }
+
+    if (coded_information[error_index] == 0){
+        coded_information[error_index] = 1;
+    } else {
+        coded_information[error_index] = 0;
+    }
+
+    if (coded_information[error_index+1] == 0){
+        coded_information[error_index+1] = 1;
+    } else {
+        coded_information[error_index+1] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> two_errors_group_15_5(vector<int>& coded_information){
+    int error_index = (rand()%13)+1;
+    while (error_index == 4){
+        error_index = (rand()%13)+1;
+    }
+
+    if (coded_information[error_index] == 0){
+        coded_information[error_index] = 1;
+    } else {
+        coded_information[error_index] = 0;
+    }
+
+    if (coded_information[error_index+1] == 0){
+        coded_information[error_index+1] = 1;
+    } else {
+        coded_information[error_index+1] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> three_errors_group_15_5(vector<int>& coded_information){
+    int error_index = (rand()%12)+1;
+    while (error_index == 3 || error_index == 4){
+        error_index = (rand()%12)+1;
+    }
+
+    if (coded_information[error_index] == 0){
+        coded_information[error_index] = 1;
+    } else {
+        coded_information[error_index] = 0;
+    }
+
+    if (coded_information[error_index+1] == 0){
+        coded_information[error_index+1] = 1;
+    } else {
+        coded_information[error_index+1] = 0;
+    }
+
+    if (coded_information[error_index+2] == 0){
+        coded_information[error_index+2] = 1;
+    } else {
+        coded_information[error_index+2] = 0;
     }
 
     return coded_information;
