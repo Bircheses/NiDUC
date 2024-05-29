@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
 
@@ -13,21 +15,178 @@ vector<int> coder_15_7(vector<int>& information);
 vector<int> decoder_15_7(vector<int>& coded_information);
 vector<int> coder_15_5(vector<int>& information);
 vector<int> decoder_15_5(vector<int>& coded_information);
+int random_info();
+vector<int> one_error(vector<int>& coded_information);
+vector<int> two_errors(vector<int>& coded_information);
+vector<int> three_errors(vector<int>& coded_information);
+
 
 int main() {
+    srand(time(NULL));
+
+    for (int i = 0; i < 30; i++){
+        cout << "KOD (15,7)\n";
+        vector<int> information1 = {1,0,0,0,0,0,0};
+        for (int j = 1; j < 7; j++){
+            information1[j] = random_info();
+        }
+        cout << "wektor wejsciowy: ";
+        showVector(information1);
+
+        vector<int> coded_information1 = coder_15_7(information1);
+        cout << "zakodowany:       ";
+        showVector(coded_information1);
+
+        //coded_information1 = one_error(coded_information1);
+        coded_information1 = two_errors(coded_information1);
+        cout << "z bledami:        ";
+        showVector(coded_information1);
+
+        vector<int> decoded_information1 = decoder_15_7(coded_information1);
+        cout << "dekodowany:       ";
+        showVector(decoded_information1);
+
+        cout << "\n";
+    }
+
+    for (int i = 0; i < 30; i++){
+        cout << "KOD (15,5)\n";
+        vector<int> information2 = {1,0,0,0,0};
+        for (int j = 1; j < 5; j++){
+            information2[j] = random_info();
+        }
+        cout << "wektor wejsciowy: ";
+        showVector(information2);
+
+        vector<int> coded_information2 = coder_15_5(information2);
+        cout << "zakodowany:       ";
+        showVector(coded_information2);
+
+        //coded_information2 = one_error(coded_information2);
+        //coded_information2 = two_errors(coded_information2);
+        coded_information2 = three_errors(coded_information2);
+        cout << "z bledami:        ";
+        showVector(coded_information2);
+
+        vector<int> decoded_information2 = decoder_15_5(coded_information2);
+        cout << "dekodowany:       ";
+        showVector(decoded_information2);
+
+        cout << "\n";
+    }
+
+    /*
+    cout << "KOD (15,7)\n";
     vector<int> information1 = {1,0,1,1,1,0,1};
+    cout << "wektor wejsciowy: ";
+    showVector(information1);
     vector<int> coded_information1 = coder_15_7(information1);
+    cout << "zakodowany: ";
+    showVector(coded_information1);
+    //coded_information1[1] = 1;
+    //coded_information1[2] = 0;
+    //coded_information1[3] = 0;
+    //coded_information1[11] = 0;
+    coded_information1[12] = 0;
+    coded_information1[13] = 1;
+    //coded_information1[14] = 1;
+    cout << "z bledami:  ";
     showVector(coded_information1);
     vector<int> decoded_information1 = decoder_15_7(coded_information1);
+    cout << "dekodowany: ";
     showVector(decoded_information1);
 
+    cout << "\n";
+
+    cout << "KOD (15,5)\n";
     vector<int> information2 = {1,0,1,1,0};
+    cout << "wektor wejsciowy: ";
+    showVector(information2);
     vector<int> coded_information2 = coder_15_5(information2);
+    cout << "zakodowany: ";
+    showVector(coded_information2);
+    coded_information2[1] = 1;
+    coded_information2[2] = 0;
+    coded_information2[10] = 1;
+    coded_information2[13] = 0;
+    cout << "z bledami:  ";
     showVector(coded_information2);
     vector<int> decoded_information2 = decoder_15_5(coded_information2);
+    cout << "dekodowany: ";
     showVector(decoded_information2);
+    */
 
     return 0;
+}
+
+int random_info(){
+    return (rand()%2);
+}
+
+vector<int> one_error(vector<int>& coded_information){
+    int error_index = (rand()%15)+1;
+
+    if (coded_information[error_index] == 0){
+        coded_information[error_index] = 1;
+    } else {
+        coded_information[error_index] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> two_errors(vector<int>& coded_information){
+    int error_index1 = (rand()%15)+1;
+    int error_index2 = error_index1;
+    while (error_index2 == error_index1){
+        error_index2 = (rand()%15)+1;
+    }
+
+    if (coded_information[error_index1] == 0){
+        coded_information[error_index1] = 1;
+    } else {
+        coded_information[error_index1] = 0;
+    }
+
+    if (coded_information[error_index2] == 0){
+        coded_information[error_index2] = 1;
+    } else {
+        coded_information[error_index2] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> three_errors(vector<int>& coded_information){
+    int error_index1 = (rand()%15)+1;
+    int error_index2 = error_index1;
+    while (error_index2 == error_index1){
+        error_index2 = (rand()%15)+1;
+    }
+    int error_index3 = error_index1;
+    while (error_index3 == error_index1 || error_index3 == error_index2){
+        error_index3 = (rand()%15)+1;
+    }
+
+    if (coded_information[error_index1] == 0){
+        coded_information[error_index1] = 1;
+    } else {
+        coded_information[error_index1] = 0;
+    }
+
+    if (coded_information[error_index2] == 0){
+        coded_information[error_index2] = 1;
+    } else {
+        coded_information[error_index2] = 0;
+    }
+
+    if (coded_information[error_index3] == 0){
+        coded_information[error_index3] = 1;
+    } else {
+        coded_information[error_index3] = 0;
+    }
+
+    return coded_information;
 }
 
 vector<int> polynomialDivison(const vector<int>& divisor, vector<int>& dividend){
