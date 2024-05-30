@@ -8,6 +8,7 @@ using namespace std;
 
 const vector<int> generator_15_7 = {1,1,1,0,1,0,0,0,1};
 const vector<int> generator_15_5 = {1,0,1,0,0,1,1,0,1,1,1};
+const vector<int> error = {-1};
 
 void showVector(vector<int>& vec);
 vector<int> polynomialDivison(const vector<int>& divisor, vector<int>& dividend);
@@ -26,8 +27,11 @@ vector<int> three_errors_group_15_5(vector<int>& coded_information);
 
 int main() {
     srand(time(NULL));
+    /*vector<int> information_15_5 = {1,0,1,1,0};
+    vector<int> coded_15_5 = coder_15_5(information_15_5);
+    showVector(coded_15_5);*/
 
-    for (int i = 0; i < 30; i++){
+    /*for (int i = 0; i < 30; i++){
         cout << "KOD (15,7)\n";
         vector<int> information1 = {1,0,0,0,0,0,0};
         for (int j = 1; j < 7; j++){
@@ -79,7 +83,7 @@ int main() {
         showVector(decoded_information2);
 
         cout << "\n";
-    }
+    }*/
 
     /*
     cout << "KOD (15,7)\n";
@@ -295,36 +299,28 @@ vector<int> coder_15_7(vector<int>& information){
 }
 
 vector<int> decoder_15_7(vector<int>& coded_information){
-    vector<int> decoded_information;
-    vector<int> syndrome = polynomialDivison(generator_15_7, coded_information);
-    int wage = count(syndrome.begin(),syndrome.end(),1);
-    if(wage == 0){
-        copy(coded_information.begin(),coded_information.begin()+7, back_inserter(decoded_information));
-        return decoded_information;
-    }else if(wage <= 2){
-        for(int i=0; i<syndrome.size(); i++){
-            coded_information[coded_information.size()-i]=(*(coded_information.rend()-i)+*(syndrome.rend()-i))%2;
+    int i = 0;
+    do{
+        vector<int> syndrome = polynomialDivison(generator_15_7, coded_information);
+        int wage = count(syndrome.begin(), syndrome.end(), 1);
+
+        if(wage <= 2){
+            for(int j=1; j<=syndrome.size(); j++){
+                coded_information[coded_information.size()-j]=(coded_information[coded_information.size()-j]+syndrome[syndrome.size()-j])%2;
+            }
+            for(int k=0; k<i; k++){
+                rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
+            }
+            vector<int> decoded_information;
+            copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
+            return decoded_information;
         }
-        copy(coded_information.begin(),coded_information.begin()+7, back_inserter(decoded_information));
-        return decoded_information;
-    }else{
-        int j = 0;
-        while(wage > 2) {
-            rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
-            syndrome = polynomialDivison(generator_15_7, coded_information);
-            wage = count(syndrome.begin(),syndrome.end(),1);
-            j++;
+        if(i==7) return error;
+        else{
+            rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
+            i++;
         }
-        for(int i=1; i<=syndrome.size(); i++){
-            coded_information[coded_information.size()-i]=(coded_information[coded_information.size()-i]+syndrome[syndrome.size()-i])%2;
-        }
-        while(j>0){
-            rotate(coded_information.begin(), coded_information.begin()+1, coded_information.end());
-            j--;
-        }
-        copy(coded_information.begin(),coded_information.begin()+7, back_inserter(decoded_information));
-        return decoded_information;
-    }
+    }while(true);
 }
 
 vector<int> coder_15_5(vector<int>& information){
@@ -340,34 +336,26 @@ vector<int> coder_15_5(vector<int>& information){
 }
 
 vector<int> decoder_15_5(vector<int>& coded_information){
-    vector<int> decoded_information;
-    vector<int> syndrome = polynomialDivison(generator_15_5, coded_information);
-    int wage = count(syndrome.begin(),syndrome.end(),1);
-    if(wage == 0){
-        copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
-        return decoded_information;
-    }else if(wage <= 3){
-        for(int i=0; i<syndrome.size(); i++){
-            coded_information[coded_information.size()-i]=(*(coded_information.rend()-i)+*(syndrome.rend()-i))%2;
+    int i = 0;
+    do{
+        vector<int> syndrome = polynomialDivison(generator_15_5, coded_information);
+        int wage = count(syndrome.begin(), syndrome.end(), 1);
+
+        if(wage <= 2){
+            for(int j=1; j<=syndrome.size(); j++){
+                coded_information[coded_information.size()-j]=(coded_information[coded_information.size()-j]+syndrome[syndrome.size()-j])%2;
+            }
+            for(int k=0; k<i; k++){
+                rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
+            }
+            vector<int> decoded_information;
+            copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
+            return decoded_information;
         }
-        copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
-        return decoded_information;
-    }else{
-        int j = 0;
-        while(wage > 3) {
-            rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
-            syndrome = polynomialDivison(generator_15_5, coded_information);
-            wage = count(syndrome.begin(),syndrome.end(),1);
-            j++;
+        if(i==7) return error;
+        else{
+            rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
+            i++;
         }
-        for(int i=1; i<=syndrome.size(); i++){
-            coded_information[coded_information.size()-i]=(coded_information[coded_information.size()-i]+syndrome[syndrome.size()-i])%2;
-        }
-        while(j>0){
-            rotate(coded_information.begin(), coded_information.begin()+1, coded_information.end());
-            j--;
-        }
-        copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
-        return decoded_information;
-    }
+    }while(true);
 }
