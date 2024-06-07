@@ -17,21 +17,22 @@ vector<int> decoder_15_7(vector<int>& coded_information);
 vector<int> coder_15_5(vector<int>& information);
 vector<int> decoder_15_5(vector<int>& coded_information);
 int random_info();
-vector<int> one_error(vector<int>& coded_information);
-vector<int> two_errors(vector<int>& coded_information);
-vector<int> three_errors(vector<int>& coded_information);
-vector<int> two_errors_group_15_7(vector<int>& coded_information);
-vector<int> two_errors_group_15_5(vector<int>& coded_information);
-vector<int> three_errors_group_15_5(vector<int>& coded_information);
+vector<int> one_error(vector<int>& coded_information, int first, int last);
+vector<int> two_errors(vector<int>& coded_information, int first, int last);
+vector<int> three_errors(vector<int>& coded_information, int first, int last);
+vector<int> four_errors(vector<int>& coded_information, int first, int last);
+vector<int> two_errors_group(vector<int>& coded_information, int first, int last);      // last - ostatni indeks, od ktorego mozna zaczac grupe bledow
+vector<int> three_errors_group(vector<int>& coded_information, int first, int last);
+vector<int> four_errors_group(vector<int>& coded_information, int first, int last);
+bool compare_vectors(vector<int>& input, vector<int>& output);
 
 
 int main() {
     srand(time(NULL));
-    /*vector<int> information_15_5 = {1,0,1,1,0};
-    vector<int> coded_15_5 = coder_15_5(information_15_5);
-    showVector(coded_15_5);*/
+    float test_number = 500;
+    float correct_decode = 0;
 
-    /*for (int i = 0; i < 30; i++){
+    for (int i = 0; i < test_number; i++){
         cout << "KOD (15,7)\n";
         vector<int> information1 = {1,0,0,0,0,0,0};
         for (int j = 1; j < 7; j++){
@@ -44,9 +45,16 @@ int main() {
         cout << "zakodowany:       ";
         showVector(coded_information1);
 
-        //coded_information1 = one_error(coded_information1);
-        //coded_information1 = two_errors(coded_information1);
-        coded_information1 = two_errors_group_15_7(coded_information1);
+        //coded_information1 = one_error(coded_information1, 1, 6);       // 1 blad, cz. inf.
+        //coded_information1 = one_error(coded_information1, 7, 14);   // 1 blad, cz. kontr.
+        //coded_information1 = two_errors(coded_information1, 1, 6);      // 2 bledy, cz. inf.
+        //coded_information1 = two_errors(coded_information1, 7, 14);      // 2 bledy, cz. kontr.
+        //coded_information1 = three_errors(coded_information1, 1, 6);       // 3 bledy, cz. inf.
+        //coded_information1 = three_errors(coded_information1, 7, 14);   // 3 bledy, cz. kontr.
+        //coded_information1 = two_errors_group(coded_information1, 1, 5);      // grupa 2 bledow, cz. inf.
+        //coded_information1 = two_errors_group(coded_information1, 7, 13);      // grupa 2 bledow, cz. kontr.
+        //coded_information1 = three_errors_group(coded_information1, 1, 4);      // grupa 3 bledow, cz. inf.
+        //coded_information1 = three_errors_group(coded_information1, 7, 12);      // grupa 3 bledow, cz. kontr.
         cout << "z bledami:        ";
         showVector(coded_information1);
 
@@ -54,10 +62,14 @@ int main() {
         cout << "dekodowany:       ";
         showVector(decoded_information1);
 
+        if (compare_vectors(information1, decoded_information1)){
+            correct_decode++;
+        }
+
         cout << "\n";
     }
-
-    for (int i = 0; i < 30; i++){
+/*
+    for (int i = 0; i < test_number; i++){
         cout << "KOD (15,5)\n";
         vector<int> information2 = {1,0,0,0,0};
         for (int j = 1; j < 5; j++){
@@ -70,11 +82,21 @@ int main() {
         cout << "zakodowany:       ";
         showVector(coded_information2);
 
-        //coded_information2 = one_error(coded_information2);
-        //coded_information2 = two_errors(coded_information2);
-        //coded_information2 = three_errors(coded_information2);
-        //coded_information2 = two_errors_group_15_5(coded_information2);
-        coded_information2 = three_errors_group_15_5(coded_information2);
+        //coded_information2 = one_error(coded_information2, 1, 4);       // 1 blad, cz. inf.
+        //coded_information2 = one_error(coded_information2, 5, 14);   // 1 blad, cz. kontr.
+        //coded_information2 = two_errors(coded_information2, 1, 4);      // 2 bledy, cz. inf.
+        //coded_information2 = two_errors(coded_information2, 5, 14);      // 2 bledy, cz. kontr.
+        //coded_information2 = three_errors(coded_information2, 1, 4);       // 3 bledy, cz. inf.
+        //coded_information2 = three_errors(coded_information2, 5, 14);   // 3 bledy, cz. kontr.
+        //coded_information2 = four_errors(coded_information2, 1, 4);       // 4 bledy, cz. inf.
+        //coded_information2 = four_errors(coded_information2, 5, 14);   // 4 bledy, cz. kontr.
+        //coded_information2 = two_errors_group(coded_information2, 1, 3);      // grupa 2 bledow, cz. inf.
+        //coded_information2 = two_errors_group(coded_information2, 5, 13);      // grupa 2 bledow, cz. kontr.
+        //coded_information2 = three_errors_group(coded_information2, 1, 2);      // grupa 3 bledow, cz. inf.
+        //coded_information2 = three_errors_group(coded_information2, 5, 12);      // grupa 3 bledow, cz. kontr.
+        //coded_information2 = four_errors_group(coded_information2, 1, 1);      // grupa 4 bledow, cz. inf.
+        //coded_information2 = four_errors_group(coded_information2, 5, 11);      // grupa 4 bledow, cz. kontr.
+
         cout << "z bledami:        ";
         showVector(coded_information2);
 
@@ -82,14 +104,20 @@ int main() {
         cout << "dekodowany:       ";
         showVector(decoded_information2);
 
+        if (compare_vectors(information2, decoded_information2)){
+            correct_decode++;
+        }
+
         cout << "\n";
-    }*/
+    }
+
+
 
     /*
     cout << "KOD (15,7)\n";
-    vector<int> information1 = {1,0,1,1,1,0,1};
+    vector<int> information2 = {1,0,1,1,0};
     cout << "wektor wejsciowy: ";
-    showVector(information1);
+    showVector(information2);
     vector<int> coded_information1 = coder_15_7(information1);
     cout << "zakodowany: ";
     showVector(coded_information1);
@@ -126,6 +154,10 @@ int main() {
     showVector(decoded_information2);
     */
 
+    cout << "Wykonane testy: " << test_number;
+    cout << "\nTesty zakonczone powodzeniem: " << correct_decode;
+    cout << "\nSkutecznosc: " << (correct_decode/test_number)*100 << "%";
+
     return 0;
 }
 
@@ -133,8 +165,19 @@ int random_info(){
     return (rand()%2);
 }
 
-vector<int> one_error(vector<int>& coded_information){
-    int error_index = (rand()%14)+1;
+bool compare_vectors(vector<int>& input, vector<int>& output){
+    int len = min(input.size(), output.size());
+    for (int j=0; j<len; j++){
+        if (input[j]!=output[j]){
+            return false;
+        }
+    }
+    return true;
+}
+
+vector<int> one_error(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index = (rand()%range)+first;
 
     if (coded_information[error_index] == 0){
         coded_information[error_index] = 1;
@@ -145,11 +188,12 @@ vector<int> one_error(vector<int>& coded_information){
     return coded_information;
 }
 
-vector<int> two_errors(vector<int>& coded_information){
-    int error_index1 = (rand()%14)+1;
+vector<int> two_errors(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index1 = (rand()%range)+first;
     int error_index2 = error_index1;
     while (error_index2 == error_index1){
-        error_index2 = (rand()%14)+1;
+        error_index2 = (rand()%range)+first;
     }
 
     if (coded_information[error_index1] == 0){
@@ -167,15 +211,16 @@ vector<int> two_errors(vector<int>& coded_information){
     return coded_information;
 }
 
-vector<int> three_errors(vector<int>& coded_information){
-    int error_index1 = (rand()%14)+1;
+vector<int> three_errors(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index1 = (rand()%range)+first;
     int error_index2 = error_index1;
     while (error_index2 == error_index1){
-        error_index2 = (rand()%14)+1;
+        error_index2 = (rand()%range)+first;
     }
     int error_index3 = error_index1;
     while (error_index3 == error_index1 || error_index3 == error_index2){
-        error_index3 = (rand()%14)+1;
+        error_index3 = (rand()%range)+first;
     }
 
     if (coded_information[error_index1] == 0){
@@ -199,11 +244,52 @@ vector<int> three_errors(vector<int>& coded_information){
     return coded_information;
 }
 
-vector<int> two_errors_group_15_7(vector<int>& coded_information){
-    int error_index = (rand()%13)+1;
-    while (error_index == 6){
-        error_index = (rand()%13)+1;
+vector<int> four_errors(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index1 = (rand()%range)+first;
+    int error_index2 = error_index1;
+    while (error_index2 == error_index1){
+        error_index2 = (rand()%range)+first;
     }
+    int error_index3 = error_index1;
+    while (error_index3 == error_index1 || error_index3 == error_index2){
+        error_index3 = (rand()%range)+first;
+    }
+    int error_index4 = error_index1;
+    while (error_index4 == error_index1 || error_index4 == error_index2 || error_index4 == error_index3){
+        error_index4 = (rand()%range)+first;
+    }
+
+    if (coded_information[error_index1] == 0){
+        coded_information[error_index1] = 1;
+    } else {
+        coded_information[error_index1] = 0;
+    }
+
+    if (coded_information[error_index2] == 0){
+        coded_information[error_index2] = 1;
+    } else {
+        coded_information[error_index2] = 0;
+    }
+
+    if (coded_information[error_index3] == 0){
+        coded_information[error_index3] = 1;
+    } else {
+        coded_information[error_index3] = 0;
+    }
+
+    if (coded_information[error_index4] == 0){
+        coded_information[error_index4] = 1;
+    } else {
+        coded_information[error_index4] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> two_errors_group(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index = (rand()%range)+first;
 
     if (coded_information[error_index] == 0){
         coded_information[error_index] = 1;
@@ -220,32 +306,9 @@ vector<int> two_errors_group_15_7(vector<int>& coded_information){
     return coded_information;
 }
 
-vector<int> two_errors_group_15_5(vector<int>& coded_information){
-    int error_index = (rand()%13)+1;
-    while (error_index == 4){
-        error_index = (rand()%13)+1;
-    }
-
-    if (coded_information[error_index] == 0){
-        coded_information[error_index] = 1;
-    } else {
-        coded_information[error_index] = 0;
-    }
-
-    if (coded_information[error_index+1] == 0){
-        coded_information[error_index+1] = 1;
-    } else {
-        coded_information[error_index+1] = 0;
-    }
-
-    return coded_information;
-}
-
-vector<int> three_errors_group_15_5(vector<int>& coded_information){
-    int error_index = (rand()%12)+1;
-    while (error_index == 3 || error_index == 4){
-        error_index = (rand()%12)+1;
-    }
+vector<int> three_errors_group(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index = (rand()%range)+first;
 
     if (coded_information[error_index] == 0){
         coded_information[error_index] = 1;
@@ -263,6 +326,37 @@ vector<int> three_errors_group_15_5(vector<int>& coded_information){
         coded_information[error_index+2] = 1;
     } else {
         coded_information[error_index+2] = 0;
+    }
+
+    return coded_information;
+}
+
+vector<int> four_errors_group(vector<int>& coded_information, int first, int last){
+    int range = last - first + 1;
+    int error_index = (rand()%range)+first;
+
+    if (coded_information[error_index] == 0){
+        coded_information[error_index] = 1;
+    } else {
+        coded_information[error_index] = 0;
+    }
+
+    if (coded_information[error_index+1] == 0){
+        coded_information[error_index+1] = 1;
+    } else {
+        coded_information[error_index+1] = 0;
+    }
+
+    if (coded_information[error_index+2] == 0){
+        coded_information[error_index+2] = 1;
+    } else {
+        coded_information[error_index+2] = 0;
+    }
+
+    if (coded_information[error_index+3] == 0){
+        coded_information[error_index+3] = 1;
+    } else {
+        coded_information[error_index+3] = 0;
     }
 
     return coded_information;
@@ -312,7 +406,7 @@ vector<int> decoder_15_7(vector<int>& coded_information){
                 rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
             }
             vector<int> decoded_information;
-            copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
+            copy(coded_information.begin(),coded_information.begin()+7, back_inserter(decoded_information));
             return decoded_information;
         }
         if(i==7) return error;
