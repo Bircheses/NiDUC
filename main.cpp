@@ -369,8 +369,9 @@ vector<int> polynomialDivison(const vector<int>& divisor, vector<int>& dividend)
     while(remainder.size()>=divisor.size()) {
         quotient[quotient.size()-(remainder.size()-divisor.size())-1]=1;
         for (int i = 0; i < divisor.size(); i++) remainder[i] = (remainder[i] + divisor[i]) % 2;
-        do remainder.erase(remainder.begin());
-        while (remainder[0]==0 && !remainder.empty());
+        while (remainder[0]==0 && !remainder.empty()) {
+            remainder.erase(remainder.begin());
+        }
     }
     return remainder;
 }
