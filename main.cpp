@@ -404,7 +404,7 @@ vector<int> decoder_15_7(vector<int>& coded_information){
                 coded_information[coded_information.size()-j]=(coded_information[coded_information.size()-j]+syndrome[syndrome.size()-j])%2;
             }
             for(int k=0; k<i; k++){
-                rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
+                rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
             }
             vector<int> decoded_information;
             copy(coded_information.begin(),coded_information.begin()+7, back_inserter(decoded_information));
@@ -412,7 +412,7 @@ vector<int> decoder_15_7(vector<int>& coded_information){
         }
         if(i==7) return error;
         else{
-            rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
+            rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
             i++;
         }
     }while(true);
@@ -435,13 +435,13 @@ vector<int> decoder_15_5(vector<int>& coded_information){
     do{
         vector<int> syndrome = polynomialDivison(generator_15_5, coded_information);
         int wage = count(syndrome.begin(), syndrome.end(), 1);
-
+       
         if(wage <= 3){
             for(int j=1; j<=syndrome.size(); j++){
                 coded_information[coded_information.size()-j]=(coded_information[coded_information.size()-j]+syndrome[syndrome.size()-j])%2;
             }
             for(int k=0; k<i; k++){
-                rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
+                rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
             }
             vector<int> decoded_information;
             copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
@@ -449,7 +449,7 @@ vector<int> decoder_15_5(vector<int>& coded_information){
         }
         if(i==5) return error;
         else{
-            rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
+            rotate(coded_information.rbegin(), coded_information.rbegin() + 1, coded_information.rend());
             i++;
         }
     }while(true);
