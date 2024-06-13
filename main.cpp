@@ -31,11 +31,11 @@ int main() {
     srand(time(NULL));
     float test_number = 500;
     float correct_decode = 0;
-
+/*
     for (int i = 0; i < test_number; i++){
         cout << "KOD (15,7)\n";
-        vector<int> information1 = {1,0,0,0,0,0,0};
-        for (int j = 1; j < 7; j++){
+        vector<int> information1 = {0,0,0,0,0,0,0};
+        for (int j = 0; j < 7; j++){
             information1[j] = random_info();
         }
         cout << "wektor wejsciowy: ";
@@ -45,16 +45,16 @@ int main() {
         cout << "zakodowany:       ";
         showVector(coded_information1);
 
-        //coded_information1 = one_error(coded_information1, 1, 6);       // 1 blad, cz. inf.
-        //coded_information1 = one_error(coded_information1, 7, 14);   // 1 blad, cz. kontr.
-        //coded_information1 = two_errors(coded_information1, 1, 6);      // 2 bledy, cz. inf.
-        //coded_information1 = two_errors(coded_information1, 7, 14);      // 2 bledy, cz. kontr.
-        //coded_information1 = three_errors(coded_information1, 1, 6);       // 3 bledy, cz. inf.
-        //coded_information1 = three_errors(coded_information1, 7, 14);   // 3 bledy, cz. kontr.
-        //coded_information1 = two_errors_group(coded_information1, 1, 5);      // grupa 2 bledow, cz. inf.
-        //coded_information1 = two_errors_group(coded_information1, 7, 13);      // grupa 2 bledow, cz. kontr.
-        //coded_information1 = three_errors_group(coded_information1, 1, 4);      // grupa 3 bledow, cz. inf.
-        //coded_information1 = three_errors_group(coded_information1, 7, 12);      // grupa 3 bledow, cz. kontr.
+//        coded_information1 = one_error(coded_information1, 0, 6);       // 1 blad, cz. inf.
+//        coded_information1 = one_error(coded_information1, 7, 14);   // 1 blad, cz. kontr.
+//        coded_information1 = two_errors(coded_information1, 0, 6);      // 2 bledy, cz. inf.
+//        coded_information1 = two_errors(coded_information1, 7, 14);      // 2 bledy, cz. kontr.
+//        coded_information1 = three_errors(coded_information1, 0, 6);       // 3 bledy, cz. inf.
+//        coded_information1 = three_errors(coded_information1, 7, 14);   // 3 bledy, cz. kontr.
+//        coded_information1 = two_errors_group(coded_information1, 0, 5);      // grupa 2 bledow, cz. inf.
+//        coded_information1 = two_errors_group(coded_information1, 7, 13);      // grupa 2 bledow, cz. kontr.
+//        coded_information1 = three_errors_group(coded_information1, 0, 4);      // grupa 3 bledow, cz. inf.
+//        coded_information1 = three_errors_group(coded_information1, 7, 12);      // grupa 3 bledow, cz. kontr.
         cout << "z bledami:        ";
         showVector(coded_information1);
 
@@ -68,11 +68,11 @@ int main() {
 
         cout << "\n";
     }
-/*
+*/
     for (int i = 0; i < test_number; i++){
         cout << "KOD (15,5)\n";
-        vector<int> information2 = {1,0,0,0,0};
-        for (int j = 1; j < 5; j++){
+        vector<int> information2 = {0,0,0,0,0};
+        for (int j = 0; j < 5; j++){
             information2[j] = random_info();
         }
         cout << "wektor wejsciowy: ";
@@ -82,20 +82,20 @@ int main() {
         cout << "zakodowany:       ";
         showVector(coded_information2);
 
-        //coded_information2 = one_error(coded_information2, 1, 4);       // 1 blad, cz. inf.
-        //coded_information2 = one_error(coded_information2, 5, 14);   // 1 blad, cz. kontr.
-        //coded_information2 = two_errors(coded_information2, 1, 4);      // 2 bledy, cz. inf.
-        //coded_information2 = two_errors(coded_information2, 5, 14);      // 2 bledy, cz. kontr.
-        //coded_information2 = three_errors(coded_information2, 1, 4);       // 3 bledy, cz. inf.
-        //coded_information2 = three_errors(coded_information2, 5, 14);   // 3 bledy, cz. kontr.
-        //coded_information2 = four_errors(coded_information2, 1, 4);       // 4 bledy, cz. inf.
-        //coded_information2 = four_errors(coded_information2, 5, 14);   // 4 bledy, cz. kontr.
-        //coded_information2 = two_errors_group(coded_information2, 1, 3);      // grupa 2 bledow, cz. inf.
-        //coded_information2 = two_errors_group(coded_information2, 5, 13);      // grupa 2 bledow, cz. kontr.
-        //coded_information2 = three_errors_group(coded_information2, 1, 2);      // grupa 3 bledow, cz. inf.
-        //coded_information2 = three_errors_group(coded_information2, 5, 12);      // grupa 3 bledow, cz. kontr.
-        //coded_information2 = four_errors_group(coded_information2, 1, 1);      // grupa 4 bledow, cz. inf.
-        //coded_information2 = four_errors_group(coded_information2, 5, 11);      // grupa 4 bledow, cz. kontr.
+//        coded_information2 = one_error(coded_information2, 0, 4);       // 1 blad, cz. inf.
+//        coded_information2 = one_error(coded_information2, 5, 14);   // 1 blad, cz. kontr.
+//        coded_information2 = two_errors(coded_information2, 0, 4);      // 2 bledy, cz. inf.
+//        coded_information2 = two_errors(coded_information2, 5, 14);      // 2 bledy, cz. kontr.
+//        coded_information2 = three_errors(coded_information2, 0, 4);       // 3 bledy, cz. inf.
+//        coded_information2 = three_errors(coded_information2, 5, 14);   // 3 bledy, cz. kontr.
+//        coded_information2 = four_errors(coded_information2, 0, 4);       // 4 bledy, cz. inf.
+//        coded_information2 = four_errors(coded_information2, 5, 14);   // 4 bledy, cz. kontr.
+//        coded_information2 = two_errors_group(coded_information2, 0, 3);      // grupa 2 bledow, cz. inf.
+//        coded_information2 = two_errors_group(coded_information2, 5, 13);     // grupa 2 bledow, cz. kontr.
+//        coded_information2 = three_errors_group(coded_information2, 0, 2);      // grupa 3 bledow, cz. inf.
+//        coded_information2 = three_errors_group(coded_information2, 5, 12);      // grupa 3 bledow, cz. kontr.
+//        coded_information2 = four_errors_group(coded_information2, 0, 1);      // grupa 4 bledow, cz. inf.
+//        coded_information2 = four_errors_group(coded_information2, 5, 11);      // grupa 4 bledow, cz. kontr.
 
         cout << "z bledami:        ";
         showVector(coded_information2);
@@ -370,8 +370,8 @@ vector<int> polynomialDivison(const vector<int>& divisor, vector<int>& dividend)
         quotient[quotient.size()-(remainder.size()-divisor.size())-1]=1;
         for (int i = 0; i < divisor.size(); i++) remainder[i] = (remainder[i] + divisor[i]) % 2;
         while (remainder[0]==0 && !remainder.empty()) {
-            remainder.erase(remainder.begin());
-        }
+        	remainder.erase(remainder.begin());
+		}
     }
     return remainder;
 }
@@ -436,7 +436,7 @@ vector<int> decoder_15_5(vector<int>& coded_information){
         vector<int> syndrome = polynomialDivison(generator_15_5, coded_information);
         int wage = count(syndrome.begin(), syndrome.end(), 1);
 
-        if(wage <= 2){
+        if(wage <= 3){
             for(int j=1; j<=syndrome.size(); j++){
                 coded_information[coded_information.size()-j]=(coded_information[coded_information.size()-j]+syndrome[syndrome.size()-j])%2;
             }
@@ -447,7 +447,7 @@ vector<int> decoder_15_5(vector<int>& coded_information){
             copy(coded_information.begin(),coded_information.begin()+5, back_inserter(decoded_information));
             return decoded_information;
         }
-        if(i==7) return error;
+        if(i==5) return error;
         else{
             rotate(coded_information.begin(), coded_information.begin() + 1, coded_information.end());
             i++;
